@@ -1,0 +1,9 @@
+{
+  "name": "Elections",
+  "dependencies": {
+    "angular-bootstrap": "0.12.x",
+    "angularjs-file-upload": "1.6.*",
+    "angular-route": "1.2.x"
+  },
+  "devDependencies": {}
+}
