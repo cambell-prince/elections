@@ -69,7 +69,8 @@ var app = angular.module('el.elections',
     model.id = '';
     model.name = $scope.name;
     console.log("addElection ", model);
-    electionService.update(model, function(result) {
+    electionService.save(model, function(result) {
+      console.log("addElection return");
       if (result.ok) {
         // TODO broadcast notice and add
         $scope.queryElections();
