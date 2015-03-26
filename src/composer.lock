@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2afe6ba82d050e556c609d5a92dcd338",
+    "hash": "3e44fcc4fc169620e6616695d58f5d07",
     "packages": [
         {
             "name": "fortawesome/font-awesome",
@@ -53,6 +53,69 @@
                 "icon"
             ],
             "time": "2015-01-22 18:09:42"
+        },
+        {
+            "name": "sillsdev/web-php-mapper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sillsdev/web-php-mapper.git",
+                "reference": "34a930b4406b618939c627cd2f3e28e9f2ca7ced"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sillsdev/web-php-mapper/zipball/34a930b4406b618939c627cd2f3e28e9f2ca7ced",
+                "reference": "34a930b4406b618939c627cd2f3e28e9f2ca7ced",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SIL_Mapper\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple ORM and mapper for JSON, Mongo, and MySQL",
+            "support": {
+                "source": "https://github.com/sillsdev/web-php-mapper/tree/master",
+                "issues": "https://github.com/sillsdev/web-php-mapper/issues"
+            },
+            "time": "2014-06-03 00:03:35"
+        },
+        {
+            "name": "sillsdev/web-php-utilities",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sillsdev/web-php-utilities.git",
+                "reference": "b3af48667dc42cdf45ec86170d02956b3fd75cd9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sillsdev/web-php-utilities/zipball/b3af48667dc42cdf45ec86170d02956b3fd75cd9",
+                "reference": "b3af48667dc42cdf45ec86170d02956b3fd75cd9",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.2.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Palaso\\Utilities\\": "src/"
+                }
+            },
+            "description": "PHP utilties for file operations and code protection.",
+            "support": {
+                "source": "https://github.com/sillsdev/web-php-utilities/tree/master",
+                "issues": "https://github.com/sillsdev/web-php-utilities/issues"
+            },
+            "time": "2014-10-24 04:55:14"
         },
         {
             "name": "slim/slim",
@@ -1313,7 +1376,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "sillsdev/web-php-utilities": 20,
+        "sillsdev/web-php-mapper": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

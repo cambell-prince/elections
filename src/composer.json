@@ -1,8 +1,20 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/sillsdev/web-php-utilities"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/sillsdev/web-php-mapper"
+        }
+    ],
     "require": {
         "slim/slim": "~2.6.2",
         "twbs/bootstrap": "~3.3",
-        "fortawesome/font-awesome": "~4.3"
+        "fortawesome/font-awesome": "~4.3",
+        "sillsdev/web-php-utilities": "dev-master",
+        "sillsdev/web-php-mapper": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5.0",

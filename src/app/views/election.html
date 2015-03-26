@@ -1,0 +1,240 @@
+<tabset>
+<tab heading="Scenes">
+<div ng-controller="ShowScenesCtrl" active="debug.setTab">
+<!-- <p>{{show.id}}</p> -->
+<form class="control-bar form-inline">
+<button class="btn" ng-click="removeScenes()"><i class="icon-remove"></i>Remove</button>
+<!-- <button class="btn" ng-click=""><i class="icon-copy"></i>Copy</button> -->
+<button class="btn" ng-click="newSceneCollapsed = !newSceneCollapsed"><i class="icon-plus"></i>New Scene</button>
+</form>
+<div collapse="!newSceneCollapsed">
+	<form class="well form-inline">
+	<label>Name:</label>
+	<input name="sceneName" ng-model="sceneName" type="text" placeholder="Scene Name" />
+	<button class="btn" ng-click="addScene()"><i class="icon-pencil"></i>Save</button>
+	</form>
+</div>
+<table class="table" style="width: 100%">
+	<thead>
+	<tr>
+		<th width="16px"></th>
+		<th></th>
+		<th>Scene</th>
+	</tr>
+	</thead>
+	<tbody ui-sortable ng-model="scenesIndex">
+	<tr ng-repeat="proxy in scenesIndex" ng-class="{active: isSelected(proxy.id)}" ng-click="selectScene(proxy.id)" >
+		<td width="16px" align="center"><input type="checkbox" ng-checked="isSelected(proxy.id)" ng-click="updateSelection($event, proxy.id)" /></td>
+		<td width="168px"><img ng-src="{{proxy.snapUrl}}" style="width: 160px; height: auto" /></td>
+		<td><a href="#/show/{{show.id}}/{{proxy.id}}">{{proxy.name}}</a></td>
+	</tr>
+	</tbody>
+</table>
+</div>
+</tab>
+<!-- 
+<tab heading="Data">
+</tab>
+ -->
+<tab heading="Actions">
+<div ng-controller="ShowActionsCtrl">
+	<div id="actionControls" class="well">
+	<form class="control-bar form-inline">
+		<button class="btn" ng-click="removeAction()"><i class="icon-remove"></i>Remove</button>
+		<select ng-model="currentAction" ng-options="action.name for (id, action) in show.actions" ng-disabled="show.actions.length == 0"></select>
+		<button ng-click="actionInClick()" class="btn preview">In</button>
+		<button ng-click="actionOutClick()" class="btn preview">Out</button>
+		<button class="btn" ng-click="newActionCollapsed = !newActionCollapsed"><i class="icon-plus"></i>Add New</button>
+		<button class="btn" ng-click="saveShow()"><i class="icon-pencil"></i>Save</button>
+	</form>
+	<form class="form-inline" collapse="!newActionCollapsed">
+		<label>Name:</label>
+		<input ng-model="newActionName" type="text" placeholder="Action Name" />
+		<button class="btn" ng-click="addAction()"><i class="icon-pencil"></i>Save</button>
+	</form>
+	</div>
+	<fieldset>
+	<h2>Action Properties</h2>
+	<form id="actionProperties" class="span12 form-inline well">
+		<label>Action name:</label>
+		<input ng-model="currentAction.name" type="text" placeholder="Action Name" />
+	</form>
+	<div style="clear:both;">
+	<h2>Action Commands</h2>
+	<div class="span6 action" style="display:inline-block">
+		<form class="control-bar form-inline well">
+			<select ng-model="newCommandType" ng-options="command.type group by command.cat for command in allCommands"></select>
+			<button class="btn" ng-click="addCommand()" ng-disabled="currentAction == undefined"><i class="icon-plus"></i>Add</button>
+		<table class="grid" width="100%">
+		<thead><tr>
+			<th>Description</th><th>Command</th><th></th>
+		</tr></thead>
+		<tbody><tr ng-repeat="command in currentAction.commands" ng-click="selectCommand(command)">
+			<td>{{command.name}}</td><td>{{command.type}}</td><td><a ng-click="removeCommand($index)"><i class="icon-remove"></i>Remove</a></td>
+		</tr></tbody>
+		</table>
+		</form>
+	</div>
+	<div class="span6 action" style="display:inline-block">
+		<div ng-switch on="currentCommand.type">
+		<form ng-switch-when="Camera" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			<tr><th><label>Camera</label></th><td><select ng-model="currentCommand.resourceName" ng-options="camera.uri as camera.name for camera in settings.cameras"></select></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Flash Template" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<tabset>
+			<tab heading="Properties">
+				<table>
+				<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+				<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+				<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+				<tr><th><label>Template</label></th><td><select ng-model="currentCommand.resourceName" ng-options="resource.resourceName as resource.resourceName for resource in flashResources" placeholder="Filename"/></td></tr>
+				</table>
+			</tab>
+			<tab heading="Data">
+				<table class="grid">
+				<thead>
+					<th>Name</th>
+					<th>Id</th>
+					<th>Default</th>
+					<th>Only</th>
+					<th style="width:75px"><button class="btn" ng-click="addFlashData()"><i class="icon-plus"></i>Add</button></th>
+				</thead><tbody>
+				<tr ng-repeat="data in currentCommand.dataSet">
+					<td><input style="width:80px" ng-model="data.name" type="text" placeholder="name" /></td>
+					<td><input style="width:16px" ng-model="data.fieldId" type="text" placeholder="id" /></td>
+					<td><input style="width:180px" ng-model="data.value" type="text" placeholder="default" /></td>
+					<td><input ng-model="data.useDefaultOnly" type="checkbox" /></td>
+					<td><a ng-click="removeFlashData($index)"><i class="icon-remove"></i>Remove</a></td>
+				</tr>
+				</tbody>
+				</table>
+			</tab>
+			<tab heading="Transition">
+			</tab>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Image" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			<tr><th><label>Filename</label></th><td><select ng-model="currentCommand.resourceName" ng-options="resource.resourceName as resource.resourceName for resource in imageResources" placeholder="Filename"/></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Stream" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			<tr><th><label>Stream URL</label></th><td><input ng-model="currentCommand.resourceName" type="text" placeholder="URL"/></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Video" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			<tr><th><label>Filename</label></th><td><select ng-model="currentCommand.resourceName" ng-options="resource.resourceName as resource.resourceName for resource in videoResources" placeholder="Filename"/></td></tr>
+			<tr><th><label>From Data</label></th><td><input type="checkbox" /></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Geometry" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			<tr><th><label>X Pos</label></th><td><input ng-model="currentCommand.x" type="number" placeholder="X pos" /></td></tr>
+			<tr><th><label>Y Pos</label></th><td><input ng-model="currentCommand.y" type="number" placeholder="Y pos" /></td></tr>
+			<tr><th><label>Width</label></th><td><input ng-model="currentCommand.w" type="number" placeholder="Width" /></td></tr>
+			<tr><th><label>Height</label></th><td><input ng-model="currentCommand.h" type="number" placeholder="Height" /></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Grid" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Grid Size</label></th><td><input ng-model="currentCommand.gridSize" type="number" placeholder="Grid size" /></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Opacity" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			<tr><th><label>Opacity</label></th><td><input ng-model="currentCommand.opacity" type="number" min="0" max="100" placeholder="Opacity" /></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Chroma" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			<tr><th><label>Color</label></th><td><select ng-model="currentCommand.chroma" ng-options="color for color in chromaColors"></select></td></tr>
+			<tr><th><label>Start</label></th><td><input ng-model="currentCommand.low" type="number" min="0" max="100" placeholder="Low threshold" /></td></tr>
+			<tr><th><label>End</label></th><td><input ng-model="currentCommand.high" type="number" min="0" max="100" placeholder="High threshold" /></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="Route" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Channel</label></th><td><input ng-model="currentCommand.channel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Layer</label></th><td><input ng-model="currentCommand.layer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			<tr><th><label>Source Channel</label></th><td><input ng-model="currentCommand.srcChannel" type="number" min="0" max="100" placeholder="Channel #" /></td></tr>
+			<tr><th><label>Source Layer</label></th><td><input ng-model="currentCommand.srcLayer" type="number" min="0" max="100" placeholder="Layer #" /></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-when="File" class="well">
+			<fieldset>
+			<h3>{{currentCommand.type}} Properties</h3>
+			<table>
+			<tr><th><label>Description</label></th><td><input ng-model="currentCommand.name" type="text" placeholder="Description"/></td></tr>
+			<tr><th><label>Filename</label></th><td><input ng-model="currentCommand.resourceName" type="text" placeholder="Filename"/></td></tr>
+			</table>
+			</fieldset>
+		</form>
+		<form ng-switch-default class="well">
+			<fieldset>
+			<h3>No command selected</h3>
+			</fieldset>
+		</form>
+		</div>
+	</div>
+	</div>
+	</fieldset>
+</div>
+</tab>
+</tabset>
