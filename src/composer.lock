@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3e44fcc4fc169620e6616695d58f5d07",
+    "hash": "49b3f3d85dcef942c3d6a82d01e396b0",
     "packages": [
         {
             "name": "fortawesome/font-awesome",
