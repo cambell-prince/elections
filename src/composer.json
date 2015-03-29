@@ -14,7 +14,7 @@
         "twbs/bootstrap": "~3.3",
         "fortawesome/font-awesome": "~4.3",
         "sillsdev/web-php-utilities": "dev-master",
-        "sillsdev/web-php-mapper": "dev-master"
+        "sillsdev/web-php-mapper": "dev-develop"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5.0",

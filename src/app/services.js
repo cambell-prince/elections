@@ -6,6 +6,10 @@ angular.module('el.services',
     ['ngResource']
   )
   .factory('electionService', ['$resource', function($resource) {
-    return $resource("/api/election/:electionId");
+    return $resource(
+      "/api/election/:electionId",
+      null,
+      {'query': { method: 'GET', isArray: false }}
+    );
   }])
   ;

@@ -102,11 +102,15 @@ $app->group('/api', function() use ($app) {
     $app->get('/election', function() use ($app) {
         echo json_encode(Election::readAll());
     });
-    $app->post('/election/:id', function($id) {
-
+    $app->post('/election/:id', function($id) use ($app) {
+        $body = $app->request()->getBody();
+        $data = json_decode($body, true);
+        echo json_encode(Election::update($data, $id));
     });
-    $app->post('/election', function() {
-
+    $app->post('/election', function() use ($app) {
+        $body = $app->request()->getBody();
+        $data = json_decode($body, true);
+        echo json_encode(Election::update($data));
     });
     $app->delete('/election/:id', function($id) {
 

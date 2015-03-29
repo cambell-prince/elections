@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "49b3f3d85dcef942c3d6a82d01e396b0",
+    "hash": "6fe62958015b12a2b2f4418348f61542",
     "packages": [
         {
             "name": "fortawesome/font-awesome",
@@ -56,16 +56,16 @@
         },
         {
             "name": "sillsdev/web-php-mapper",
-            "version": "dev-master",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sillsdev/web-php-mapper.git",
-                "reference": "34a930b4406b618939c627cd2f3e28e9f2ca7ced"
+                "reference": "c4396cd3bf404b95778f436356389db614ccf6f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sillsdev/web-php-mapper/zipball/34a930b4406b618939c627cd2f3e28e9f2ca7ced",
-                "reference": "34a930b4406b618939c627cd2f3e28e9f2ca7ced",
+                "url": "https://api.github.com/repos/sillsdev/web-php-mapper/zipball/c4396cd3bf404b95778f436356389db614ccf6f7",
+                "reference": "c4396cd3bf404b95778f436356389db614ccf6f7",
                 "shasum": ""
             },
             "require-dev": {
@@ -74,7 +74,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "SIL_Mapper\\": "src/"
+                    "SIL\\Mapper\\": "src/"
                 }
             },
             "license": [
@@ -82,10 +82,10 @@
             ],
             "description": "Simple ORM and mapper for JSON, Mongo, and MySQL",
             "support": {
-                "source": "https://github.com/sillsdev/web-php-mapper/tree/master",
+                "source": "https://github.com/sillsdev/web-php-mapper/tree/develop",
                 "issues": "https://github.com/sillsdev/web-php-mapper/issues"
             },
-            "time": "2014-06-03 00:03:35"
+            "time": "2015-03-28 05:25:15"
         },
         {
             "name": "sillsdev/web-php-utilities",

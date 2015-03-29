@@ -4,7 +4,8 @@
 var app = angular.module('el.elections',
     [
       'el.services',
-      'sgw.ui.breadcrumb'
+      'sgw.ui.breadcrumb',
+      'palaso.ui.listview'
     ]
   )
   .controller('ElectionsCtrl', ['$scope', 'breadcrumbService', 'electionService', function($scope, breadcrumbService, electionService) {
@@ -32,11 +33,11 @@ var app = angular.module('el.elections',
   // List
   $scope.elections = [];
   $scope.queryElections = function() {
-    electionService.list(function(result) {
-      if (result.ok) {
-        $scope.elections = result.data.entries;
-        $scope.electionCount = result.data.count;
-      }
+    console.log('query elections');
+    electionService.query(function(result) {
+      console.log(result);
+      $scope.elections = result.entries;
+      $scope.electionCount = result.count;
     });
   };
 
@@ -67,7 +68,7 @@ var app = angular.module('el.elections',
   $scope.addElection = function() {
     var model = {};
     model.id = '';
-    model.name = $scope.name;
+    model.name = "New Election";
     console.log("addElection ", model);
     electionService.save(model, function(result) {
       console.log("addElection return");

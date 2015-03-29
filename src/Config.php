@@ -20,7 +20,7 @@ if (USE_LIBS) {
 
     define('API_PATH', $rootPath);
 
-    require_once (API_PATH . 'libraries/palaso/Loader.php');
+    require_once (API_PATH . 'vendor/autoload.php');
 
 } else {
     $rootPath = realpath(dirname(__FILE__)) . '/';
