@@ -3,6 +3,7 @@ namespace Api;
 
 use SIL\Mapper\Json\JsonDecoder;
 use SIL\Mapper\Json\JsonEncoder;
+
 class Election
 {
     public static function readAll() {
@@ -11,16 +12,14 @@ class Election
     }
 
     public static function read($id) {
-
+        $model = new ElectionModel($id);
+        return JsonEncoder::encode($model);
     }
 
     public static function update($data, $id = '') {
-        if (!$id) {
-            $model = new ElectionModel();
-            JsonDecoder::decode($model, $data);
-            return $model->write();
-        }
-
+        $model = new ElectionModel($id);
+        JsonDecoder::decode($model, $data);
+        return $model->write();
     }
 
     public static function delete($id) {

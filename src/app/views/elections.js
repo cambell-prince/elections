@@ -34,10 +34,10 @@ var app = angular.module('el.elections',
   $scope.elections = [];
   $scope.queryElections = function() {
     console.log('query elections');
-    electionService.query(function(result) {
-      console.log(result);
-      $scope.elections = result.entries;
-      $scope.electionCount = result.count;
+    electionService.query(function(response) {
+      console.log(response);
+      $scope.elections = response.result.entries;
+      $scope.electionCount = response.result.count;
     });
   };
 

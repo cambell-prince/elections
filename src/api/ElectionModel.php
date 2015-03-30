@@ -5,12 +5,16 @@ use SIL\Mapper\MapperModel;
 use SIL\Mapper\Mongo\MongoMapper;
 use SIL\Mapper\MapperListModel;
 use SIL\Mapper\Id;
+use SIL\Mapper\ArrayOf;
 
 class ElectionModel extends MapperModel
 {
-    public function __construct() {
-        parent::__construct(self::mapper());
+    public function __construct($id = '') {
         $this->id = new Id();
+        $this->candidates = new ArrayOf(function($data) {
+            return new Candidate();
+        });
+        parent::__construct(self::mapper(), $id);
     }
 
     /**

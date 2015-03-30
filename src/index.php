@@ -64,6 +64,12 @@ main();
 
 class JsonMiddleware extends Middleware
 {
+    private $_urlPattern;
+
+    public function __construct($urlPattern) {
+        $this->_urlPattern = $urlPattern;
+    }
+
     public function call()
     {
         // Get reference to application
@@ -72,13 +78,28 @@ class JsonMiddleware extends Middleware
         // Run inner middleware and application
         $this->next->call();
 
-        // Set the content type header to json
-        $response = $app->response();
-        $response->header("Content-Type", "application/json");
+        $routeName = $app->router()->getCurrentRoute()->getPattern();
+        if (strstr($routeName, $this->_urlPattern) !== false) {
+            // Set the content type header to json
+            $response = $app->response();
+            if ($response->getBody()) {
+                $body = $response->getBody();
+                $body = '{"result":' . $body . '}';
+                $response->setBody($body);
+            }
+            $response->header("Content-Type", "application/json");
+        }
+
     }
 }
 
+function apiMiddleWare(\Slim\Route $route) {
+//    var_dump($route);
+//    $route->setMiddleware(new JsonMiddleware());
+}
+
 $app = new Slim();
+$app->add(new JsonMiddleware('/api/'));
 $app->get('/hello/:name', function($name) {
     echo "Hello, $name";
 });
@@ -95,9 +116,9 @@ $app->get('/admin', function() {
     $vars['version'] = VERSION . ' ' . BUILD_DATE;
     renderView('app/app.html.php', $vars);
 });
-$app->group('/api', function() use ($app) {
+$app->group('/api', 'apiMiddleWare', function() use ($app) {
     $app->get('/election/:id', function($id) {
-        return array('a' => 'a1');
+        echo json_encode(Election::read($id));
     });
     $app->get('/election', function() use ($app) {
         echo json_encode(Election::readAll());

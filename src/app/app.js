@@ -9,7 +9,7 @@ angular.module('silElections',
       templateUrl : '/app/views/elections.html',
       controller : 'ElectionsCtrl'
     });
-    $routeProvider.when('/election/:electionId', {
+    $routeProvider.when('/election/:id', {
       templateUrl : '/app/views/election.html',
       controller : 'ElectionCtrl'
     });
@@ -17,6 +17,6 @@ angular.module('silElections',
       redirectTo : '/elections'
     });
   }])
-  .controller('ElectionCtrl', ['$scope', '', function($scope) {
+  .controller('MainCtrl', ['$scope', function($scope) {
   }])
   ;
