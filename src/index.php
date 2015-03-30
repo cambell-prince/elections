@@ -113,7 +113,7 @@ $app->group('/api', function() use ($app) {
         echo json_encode(Election::update($data));
     });
     $app->delete('/election/:id', function($id) {
-
+        echo json_encode(Election::delete($id));
     });
 });
 

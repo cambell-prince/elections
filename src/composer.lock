@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sillsdev/web-php-mapper.git",
-                "reference": "c4396cd3bf404b95778f436356389db614ccf6f7"
+                "reference": "6ee38a8a3c79ca4b8fea645754d7920058591340"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sillsdev/web-php-mapper/zipball/c4396cd3bf404b95778f436356389db614ccf6f7",
-                "reference": "c4396cd3bf404b95778f436356389db614ccf6f7",
+                "url": "https://api.github.com/repos/sillsdev/web-php-mapper/zipball/6ee38a8a3c79ca4b8fea645754d7920058591340",
+                "reference": "6ee38a8a3c79ca4b8fea645754d7920058591340",
                 "shasum": ""
             },
             "require-dev": {
@@ -85,7 +85,7 @@
                 "source": "https://github.com/sillsdev/web-php-mapper/tree/develop",
                 "issues": "https://github.com/sillsdev/web-php-mapper/issues"
             },
-            "time": "2015-03-28 05:25:15"
+            "time": "2015-03-29 15:51:49"
         },
         {
             "name": "sillsdev/web-php-utilities",

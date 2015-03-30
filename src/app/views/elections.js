@@ -42,21 +42,10 @@ var app = angular.module('el.elections',
   };
 
   // Remove
-  $scope.removeElections = function() {
-    console.log("removeElections");
-    var electionIds = [];
-    for (var i = 0, l = $scope.selected.length; i < l; i++) {
-      electionIds.push($scope.selected[i].id);
-    }
-    if (l == 0) {
-      // TODO ERROR
-      return;
-    }
-    electionService.remove(electionIds, function(result) {
-      if (result.ok) {
-        $scope.queryElections();
-        // TODO
-      }
+  $scope.removeElection = function(id) {
+    console.log("removeElection", id);
+    electionService.remove({'id': id}, function(result) {
+      $scope.queryElections();
     });
   };
 
@@ -72,10 +61,8 @@ var app = angular.module('el.elections',
     console.log("addElection ", model);
     electionService.save(model, function(result) {
       console.log("addElection return");
-      if (result.ok) {
-        // TODO broadcast notice and add
-        $scope.queryElections();
-      }
+      // TODO broadcast notice and add
+      $scope.queryElections();
     });
   };
 

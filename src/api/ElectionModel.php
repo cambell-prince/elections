@@ -31,6 +31,11 @@ class ElectionModel extends MapperModel
         return $model;
     }
 
+    public static function delete($id) {
+        self::mapper()->remove($id);
+        return $id;
+    }
+
     public $id;
 
     public $name;

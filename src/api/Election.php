@@ -22,4 +22,8 @@ class Election
         }
 
     }
+
+    public static function delete($id) {
+        return ElectionModel::delete($id);
+    }
 }
