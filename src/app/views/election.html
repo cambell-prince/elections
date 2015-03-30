@@ -2,6 +2,7 @@
   <i class="fa fa-check"></i>Save
 </button>
 <h3>Election: <input type="text" ng-model="election.name" /></h3>
+<legend>Candidates</legend>
 <form class="form-inline">
   <!-- <button class="btn" ng-click=""><i class="icon-copy"></i>Copy</button> -->
   <button class="btn btn-default" ng-click="addCandidate()">
@@ -24,3 +25,14 @@
     </tr>
   </tbody>
 </table>
+<legend>Ballots</legend>
+  <button class="btn btn-default" ng-click="addCandidate()">
+    <i class="fa fa-remove"></i>Delete Unused Ballots
+  </button>
+  <button class="btn btn-default" ng-click="addCandidate()">
+    <i class="fa fa-plus"></i>Generate
+  </button>
+  <button class="btn btn-default" ng-click="addCandidate()">
+    <i class="fa fa-print"></i>Print
+  </button>
+

@@ -55,6 +55,7 @@ var module = angular.module('el.election',
     console.log($scope.election);
     electionService.save($scope.election, function(response) {
       console.log('update done');
+      updateBreadcrumbs();
     });
   }
   
