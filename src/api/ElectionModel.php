@@ -6,6 +6,7 @@ use SIL\Mapper\Mongo\MongoMapper;
 use SIL\Mapper\MapperListModel;
 use SIL\Mapper\Id;
 use SIL\Mapper\ArrayOf;
+use SIL\Mapper\MapOf;
 
 class ElectionModel extends MapperModel
 {
@@ -14,6 +15,7 @@ class ElectionModel extends MapperModel
         $this->candidates = new ArrayOf(function($data) {
             return new Candidate();
         });
+        $this->clearBallots();
         parent::__construct(self::mapper(), $id);
     }
 
@@ -38,6 +40,35 @@ class ElectionModel extends MapperModel
     public static function delete($id) {
         self::mapper()->remove($id);
         return $id;
+    }
+
+    public function ballotCount() {
+        return count($this->ballots);
+    }
+
+    public function ballotsUsed() {
+        if (!$this->ballots) {
+            return 0;
+        }
+        $used = 0;
+        foreach ($this->ballots as $ballot) {
+            if ($ballot->isUsed()) {
+                $used++;
+            }
+        }
+        return $used;
+    }
+
+    public function generateBallots($n) {
+        if ($this->ballotCount() > 0) {
+            throw new \Exception('Ballots already exist');
+        }
+    }
+
+    public function clearBallots() {
+        $this->ballots = new MapOf(function($data) {
+            return new Ballot();
+        });
     }
 
     public $id;

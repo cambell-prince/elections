@@ -123,6 +123,12 @@ $app->group('/api', 'apiMiddleWare', function() use ($app) {
     $app->get('/election', function() use ($app) {
         echo json_encode(Election::readAll());
     });
+    $app->get('/election/:id/ballots', function($id) use ($app) {
+        echo json_encode(Election::readBallots($id));
+    });
+    $app->post('/election/:id/ballots/:n', function($id, $n) use ($app) {
+        echo json_encode(Election::createBallots($id, $n));
+    });
     $app->post('/election/:id', function($id) use ($app) {
         $body = $app->request()->getBody();
         $data = json_decode($body, true);

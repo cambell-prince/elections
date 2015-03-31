@@ -1,0 +1,11 @@
+<h3>Ballots</h3>
+<form class="form-inline">
+  <!-- <button class="btn" ng-click=""><i class="icon-copy"></i>Copy</button> -->
+  <input type="text" ng-model="generateCount" />
+  <button class="btn btn-default" ng-click="addBallots()">
+    <i class="fa fa-plus"></i>Generate Ballots
+  </button>
+</form>
+<div ng-repeat="ballot in election.ballots">
+{{ballot.id}}
+</div>

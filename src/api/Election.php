@@ -13,7 +13,11 @@ class Election
 
     public static function read($id) {
         $model = new ElectionModel($id);
-        return JsonEncoder::encode($model);
+        $dto =  JsonEncoder::encode($model);
+        unset($dto['ballots']);
+        $dto['ballotCount'] = $model->ballotCount();
+        $dto['ballotsUsed'] = $model->ballotsUsed();
+        return $dto;
     }
 
     public static function update($data, $id = '') {
@@ -24,5 +28,13 @@ class Election
 
     public static function delete($id) {
         return ElectionModel::delete($id);
+    }
+
+    public static function createBallots($id) {
+
+    }
+
+    public static function postBallot($data, $id) {
+
     }
 }
